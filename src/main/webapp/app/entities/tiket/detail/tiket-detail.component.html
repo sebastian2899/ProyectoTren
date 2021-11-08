@@ -1,0 +1,52 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="tiket">
+      <h2 data-cy="tiketDetailsHeading"><span jhiTranslate="proyectoTrenApp.tiket.detail.title">Tiket</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ tiket.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="proyectoTrenApp.tiket.fecha">Fecha</span></dt>
+        <dd>
+          <span>{{ tiket.fecha | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="proyectoTrenApp.tiket.trenId">Tren Id</span></dt>
+        <dd>
+          <span>{{ tiket.trenId }}</span>
+        </dd>
+        <dt><span jhiTranslate="proyectoTrenApp.tiket.clienteId">Cliente Id</span></dt>
+        <dd>
+          <span>{{ tiket.clienteId }}</span>
+        </dd>
+        <dt><span jhiTranslate="proyectoTrenApp.tiket.puesto">Puesto</span></dt>
+        <dd>
+          <span>{{ tiket.puesto }}</span>
+        </dd>
+        <dt><span jhiTranslate="proyectoTrenApp.tiket.estado">Estado</span></dt>
+        <dd>
+          <span>{{ tiket.estado }}</span>
+        </dd>
+        <dt><span jhiTranslate="proyectoTrenApp.tiket.jordana">Jordana</span></dt>
+        <dd>
+          <span>{{ tiket.jordana }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/tiket', tiket.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

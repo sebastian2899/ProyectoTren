@@ -1,11 +1,11 @@
 {
   "home": {
-    "title": "¡Bienvenido, Java Hipster!",
-    "subtitle": "Esta es su página de inicio",
+    "title": "¡Bienvenido, Esta es la pagina de inicio. ¡Aqui puedes hacer la reserva de tu tiquete de tren.!",
+    "subtitle": "Informacion de utilidad.",
     "logged": {
       "message": "Está conectado como \"{{username}}\"."
     },
-    "question": "Si tiene preguntas sobre JHipster:",
+    "question": "Tenga en cuenta que para hacer una reserva de tren, tiene que elegir un tiquete que se encuentre disponible, de lo contrario quedara en lista de espera.",
     "link": {
       "homepage": "Página de inicio de JHipster",
       "stackoverflow": "JHipster en Stack Overflow",

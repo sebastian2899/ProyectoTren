@@ -42,6 +42,8 @@
     "devServerPort": 4200,
     "clientPackageManager": "npm",
     "languages": ["es"],
-    "enableGradleEnterprise": false
+    "enableGradleEnterprise": false,
+    "entities": ["Cliente", "Tren", "Tiket"],
+    "lastLiquibaseTimestamp": 1636305618000
   }
 }
