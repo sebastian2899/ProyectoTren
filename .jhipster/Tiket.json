@@ -1,0 +1,40 @@
+{
+  "name": "Tiket",
+  "fields": [
+    {
+      "fieldName": "fecha",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "trenId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "clienteId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "puesto",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "jordana",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "tiket",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20211108184215"
+}

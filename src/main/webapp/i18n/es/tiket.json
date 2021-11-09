@@ -1,0 +1,29 @@
+{
+  "trainProyectApp": {
+    "tiket": {
+      "home": {
+        "title": "Tikets",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Tiket",
+        "createOrEditLabel": "Crear o editar Tiket",
+        "notFound": "Ningún Tikets encontrado"
+      },
+      "created": "Un nuevo Tiket ha sido creado con el identificador {{ param }}",
+      "updated": "Un Tiket ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Tiket ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Tiket {{ id }}?"
+      },
+      "detail": {
+        "title": "Tiket"
+      },
+      "id": "ID",
+      "fecha": "Fecha",
+      "trenId": "Tren Id",
+      "clienteId": "Cliente Id",
+      "puesto": "Puesto",
+      "estado": "Estado",
+      "jordana": "Jordana"
+    }
+  }
+}

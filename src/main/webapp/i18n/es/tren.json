@@ -1,0 +1,24 @@
+{
+  "trainProyectApp": {
+    "tren": {
+      "home": {
+        "title": "Trens",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Tren",
+        "createOrEditLabel": "Crear o editar Tren",
+        "notFound": "Ningún Trens encontrado"
+      },
+      "created": "Un nuevo Tren ha sido creado con el identificador {{ param }}",
+      "updated": "Un Tren ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Tren ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Tren {{ id }}?"
+      },
+      "detail": {
+        "title": "Tren"
+      },
+      "id": "ID",
+      "asientos": "Asientos"
+    }
+  }
+}

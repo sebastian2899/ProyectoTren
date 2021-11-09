@@ -4,7 +4,7 @@
   </div>
 
   <div class="col-md-9">
-    <h1 class="display-4"><span jhiTranslate="home.title">Welcome, Java Hipster!</span> (Train Proyect)</h1>
+    <h1 class="display-4"><span jhiTranslate="home.title">Welcome, Java Hipster!</span></h1>
 
     <p class="lead" jhiTranslate="home.subtitle">This is your homepage</p>
 
@@ -32,7 +32,14 @@
 
     <p jhiTranslate="home.question">If you have any question on JHipster:</p>
 
-    <ul>
+    <ul
+      *jhiHasAnyAuthority="'ROLE_ADMIN'"
+      ngbDropdown
+      class="list-group"
+      display="dynamic"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
       <li>
         <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.homepage"
           >JHipster homepage</a
@@ -74,5 +81,17 @@
         >GitHub</a
       >!
     </p>
+
+    <div class="d-grid gap-2 col-6 mx-auto">
+      <button
+        class="btn btn-primary ml-10"
+        type="button"
+        [routerLink]="['/tiket']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Compra tu tiket aqui!
+      </button>
+    </div>
   </div>
 </div>
