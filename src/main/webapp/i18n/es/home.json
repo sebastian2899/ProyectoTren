@@ -1,11 +1,11 @@
 {
   "home": {
-    "title": "¡Bienvenido, Java Hipster!",
-    "subtitle": "Esta es su página de inicio",
+    "title": "¡Bienvenido, esta es una aplicacion para simular compras de tiquete para tren.!",
+    "subtitle": "Esta es la página de inicio",
     "logged": {
-      "message": "Está conectado como \"{{username}}\"."
+      "message": "Está conectado como \"{{username}}\". Para realizar el proceso de ingreso de datos, se debe iniciar sesion como admin."
     },
-    "question": "Si tiene preguntas sobre JHipster:",
+    "question": "Para realizar la compra del tiquete ingrese como user.!:",
     "link": {
       "homepage": "Página de inicio de JHipster",
       "stackoverflow": "JHipster en Stack Overflow",
@@ -13,7 +13,7 @@
       "chat": "Sala de chat pública de JHipster",
       "follow": "contacto @jhipster en Twitter"
     },
-    "like": "Si te gusta JHipster, danos una estrella en",
+    "like": "Ver proyecto completo en: ",
     "github": "GitHub"
   }
 }

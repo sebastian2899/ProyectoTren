@@ -26,7 +26,7 @@ export class TiketUpdateComponent implements OnInit {
   trenes: ITren[] = [];
   tren?: ITren | null;
 
-  estadoTiket = ['DISPONIBLE', 'EN ESPERA', 'NO DISPONIBLE'];
+  estadoTiket = ['Activo', 'EN ESPERA', 'NO DISPONIBLE'];
   tipoJornada = ['MAÑANA', 'TARDE', 'NOCHE'];
 
   editForm = this.fb.group({
