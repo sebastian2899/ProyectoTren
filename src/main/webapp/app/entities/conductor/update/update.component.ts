@@ -39,15 +39,16 @@ export class UpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ conductor }) => {
+      this.conductor = conductor;
+      if (this.conductor) {
+        this.idConductor = this.conductor.id;
+      }
+
       if (this.conductor?.id === undefined) {
         const today = dayjs().startOf('day');
         conductor.fechaNacimiento = today;
       }
 
-      this.conductor = conductor;
-      if (this.conductor) {
-        this.idConductor = this.conductor.id;
-      }
       this.updateForm(conductor);
     });
   }
