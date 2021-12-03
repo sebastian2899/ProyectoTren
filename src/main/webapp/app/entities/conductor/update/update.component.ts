@@ -38,12 +38,12 @@ export class UpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.conductor?.id === undefined) {
-      const today = dayjs().startOf('day');
-      this.conductor!.fechaNacimiento = today;
-    }
-
     this.activatedRoute.data.subscribe(({ conductor }) => {
+      if (this.conductor?.id === undefined) {
+        const today = dayjs().startOf('day');
+        conductor.fechaNacimiento = today;
+      }
+
       this.conductor = conductor;
       if (this.conductor) {
         this.idConductor = this.conductor.id;
