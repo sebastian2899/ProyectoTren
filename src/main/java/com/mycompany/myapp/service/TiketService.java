@@ -1,7 +1,9 @@
 package com.mycompany.myapp.service;
 
+import com.mycompany.myapp.service.dto.RegistroHistoricoTiketDTO;
 import com.mycompany.myapp.service.dto.TiketDTO;
 import com.mycompany.myapp.service.dto.TrenDTO;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +40,7 @@ public interface TiketService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<TiketDTO> findOne(Long id);
+    TiketDTO findOne(Long id);
 
     /**
      * Delete the "id" tiket.
@@ -48,4 +50,8 @@ public interface TiketService {
     void delete(Long id);
 
     TrenDTO totalPuestos(Long id);
+
+    List<RegistroHistoricoTiketDTO> consultarTiketFecha(Instant fechaInicio, Instant fechaFin);
+
+    List<TiketDTO> listaAllTikets();
 }

@@ -18,6 +18,7 @@
     <include file="config/liquibase/changelog/20211108184213_added_entity_Cliente.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20211108184214_added_entity_Tren.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20211108184215_added_entity_Tiket.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211108184213_added_entity_Conductor.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->

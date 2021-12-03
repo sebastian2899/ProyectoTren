@@ -4,9 +4,15 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
+ *
+ */
+
+/**
  * A DTO for the {@link com.mycompany.myapp.domain.Cliente} entity.
  */
 public class ClienteDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Long id;
 
@@ -14,8 +20,38 @@ public class ClienteDTO implements Serializable {
 
     private String correo;
 
+    private String apellido;
+
+    private String tipoCliente;
+
+    private byte[] foto;
+
     public Long getId() {
         return id;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getTipoCliente() {
+        return tipoCliente;
+    }
+
+    public void setTipoCliente(String tipoCliente) {
+        this.tipoCliente = tipoCliente;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 
     public void setId(Long id) {

@@ -39,6 +39,18 @@ public interface ClienteService {
      */
     Optional<ClienteDTO> findOne(Long id);
 
+    List<ClienteDTO> buscarConFiltros(String nombreFiltro);
+
+    List<ClienteDTO> validarFiltro(String nombreFiltro);
+
+    Long cargarFotoCliente(byte[] foto);
+
+    byte[] actualizarFotoCliente(byte[] bytes, Long idCliente);
+
+    ClienteDTO actualizarCliente(ClienteDTO cliente);
+
+    byte[] consultarFoto(Long idCliente);
+
     /**
      * Delete the "id" cliente.
      *

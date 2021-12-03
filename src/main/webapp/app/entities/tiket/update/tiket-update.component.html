@@ -8,12 +8,12 @@
       <div>
         <jhi-alert></jhi-alert>
 
-        <div class="row">
-          <div class="col-md-6 form-group" [hidden]="editForm.get('id')!.value == null">
-            <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
-            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-          </div>
+        <div class="col-md-6 form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
 
+        <div class="row">
           <div class="col-md-6 form-group">
             <label class="form-control-label" for="field_Cliente">Cliente</label>
             <select type="text" class="form-control" name="cliente" id="field_cliente" data-cy="cliente" formControlName="clienteId">
@@ -69,7 +69,15 @@
 
           <div class="col-md-6 form-group">
             <label class="form-control-label" for="field_estado">Estado Tiquete</label>
-            <select type="text" class="form-control" name="estado" id="field_estado" data-cy="estado" formControlName="estado">
+            <select
+              type="text"
+              class="form-control"
+              name="estado"
+              id="field_estado"
+              data-cy="estado"
+              formControlName="estado"
+              (blur)="calcularPrecioTotal()"
+            >
               <option [value]="tipo" *ngFor="let tipo of estadoTiket">{{ tipo }}</option>
             </select>
           </div>
@@ -78,7 +86,15 @@
         <div class="row">
           <div class="col-md-6 form-group">
             <label class="form-control-label" for="field_jordana">Jornada</label>
-            <select type="text" class="form-control" name="jordana" id="field_jordana" data-cy="jordana" formControlName="jordana">
+            <select
+              type="text"
+              class="form-control"
+              name="jordana"
+              id="field_jordana"
+              data-cy="jordana"
+              formControlName="jordana"
+              (blur)="calcularPrecioTotal()"
+            >
               <option [value]="tipo" *ngFor="let tipo of tipoJornada">{{ tipo }}</option>
             </select>
           </div>
@@ -96,6 +112,36 @@
                 placeholder="YYYY-MM-DD HH:mm"
               />
             </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label class="form-control-label" for="field_precioTiket">Precio Tiket</label>
+            <input
+              type="number"
+              class="form-control"
+              name="precioTiket"
+              id="field_precioTiket"
+              data-cy="precioTiket"
+              formControlName="precioTiket"
+              ngModel="precioTiket"
+              (blur)="calcularPrecioTotal()"
+              readonly="true"
+            />
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label class="form-control-label" for="field_precioTotal">Precio Total</label>
+            <input
+              readonly="true"
+              type="number"
+              class="form-control"
+              name="precioTotal"
+              id="field_field_precioTotal"
+              data-cy="precioTotal"
+              formControlName="precioTotal"
+            />
           </div>
         </div>
       </div>

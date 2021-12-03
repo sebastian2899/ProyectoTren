@@ -19,6 +19,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'trainProyectApp.tiket.home.title' },
         loadChildren: () => import('./tiket/tiket.module').then(m => m.TiketModule),
       },
+      {
+        path: 'conductor',
+        data: { pageTitle: 'trainProyectApp.conductor.home.title' },
+        loadChildren: () => import('./conductor/conductor.module').then(m => m.ConductorModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

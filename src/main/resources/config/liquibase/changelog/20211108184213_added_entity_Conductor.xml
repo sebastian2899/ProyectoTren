@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity Conductor.
+    -->
+    <changeSet id="20108184214-1" author="jhipster">
+        <createTable tableName="conductor">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nombre" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="apellido" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="telefono" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="sueldo" type="DECIMAL(12,2)">
+                <constraints nullable="true" />
+            </column>
+            <column name="edad" type="int">
+                <constraints nullable="true" />
+            </column>
+            <column name="fecha_nacimiento" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="foto" type="LONGBLOB">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

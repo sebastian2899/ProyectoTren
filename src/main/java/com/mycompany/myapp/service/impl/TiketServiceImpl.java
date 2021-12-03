@@ -1,14 +1,21 @@
 package com.mycompany.myapp.service.impl;
 
+import com.mycompany.myapp.config.EmailUtil;
+import com.mycompany.myapp.domain.Cliente;
 import com.mycompany.myapp.domain.Tiket;
 import com.mycompany.myapp.domain.Tren;
 import com.mycompany.myapp.repository.TiketRepository;
 import com.mycompany.myapp.repository.TrenRepository;
 import com.mycompany.myapp.service.TiketService;
+import com.mycompany.myapp.service.dto.RegistroHistoricoTiketDTO;
 import com.mycompany.myapp.service.dto.TiketDTO;
 import com.mycompany.myapp.service.dto.TrenDTO;
 import com.mycompany.myapp.service.mapper.TiketMapper;
 import com.mycompany.myapp.service.mapper.TrenMapper;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -51,8 +58,36 @@ public class TiketServiceImpl implements TiketService {
     public TiketDTO save(TiketDTO tiketDTO) {
         log.debug("Request to save Tiket : {}", tiketDTO);
         Tiket tiket = tiketMapper.toEntity(tiketDTO);
+        tiket.setNombreCliente(nombreCliente(tiket.getClienteId()));
         tiket = tiketRepository.save(tiket);
+        enviarCorreoConfirmacion(tiket);
         return tiketMapper.toDto(tiket);
+    }
+
+    private void enviarCorreoConfirmacion(Tiket tiket) {
+        Cliente cliente = tiketRepository.buscarCliente(tiket.getClienteId());
+
+        if (tiket.getEstado().equals("Activo") && cliente.getCorreo() != null && !cliente.getCorreo().isEmpty()) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MMMMM.dd hh:mm aaa");
+            String mensaje =
+                "Tu tiket esta reservado para la fecha: " +
+                sdf.format(Date.from(tiket.getFecha())) +
+                "--- Puesto del tren: " +
+                tiket.getPuesto() +
+                "--- Jornada: " +
+                tiket.getJordana() +
+                "--- Precio del tiket: " +
+                tiket.getPrecioTotal();
+            try {
+                log.debug("Enviando correo de confirmacion a: " + cliente.getCorreo());
+                EmailUtil.sendArchivoTLS(null, cliente.getCorreo().trim(), "Confirmación Tiket", mensaje);
+                log.debug("Notificacion enviada a: " + cliente.getCorreo());
+            } catch (Exception e) {
+                log.debug("Error enviando notificacion ", e);
+                log.debug("Error enviando notificacion ", e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -75,13 +110,27 @@ public class TiketServiceImpl implements TiketService {
     public List<TiketDTO> findAll() {
         log.debug("Request to get all Tikets");
 
-        List<Tiket> clientesTikest = tiketRepository.consultaClientes();
+        List<Tiket> clientesTikest = tiketRepository.findAll();
 
         for (Tiket tiket : clientesTikest) {
             tiket.setNombreCliente(nombreCliente(tiket.getClienteId()));
         }
 
-        return tiketRepository.findAll().stream().map(tiketMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+        return tiketRepository.tiketsActivos().stream().map(tiketMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<TiketDTO> listaAllTikets() {
+        log.debug("Request to get all Tikets");
+
+        List<Tiket> clientesTikest = tiketRepository.findAll();
+
+        for (Tiket tiket : clientesTikest) {
+            tiket.setNombreCliente(nombreCliente(tiket.getClienteId()));
+        }
+
+        return tiketRepository.tiketsProcesos().stream().map(tiketMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 
     private String nombreCliente(Long id) {
@@ -100,14 +149,37 @@ public class TiketServiceImpl implements TiketService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<TiketDTO> findOne(Long id) {
+    public TiketDTO findOne(Long id) {
         log.debug("Request to get Tiket : {}", id);
-        return tiketRepository.findById(id).map(tiketMapper::toDto);
+
+        Tiket tiket = tiketRepository.findOne(id);
+
+        tiket.setNombreCliente(nombreCliente(tiket.getClienteId()));
+
+        return tiketMapper.toDto(tiket);
     }
 
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Tiket : {}", id);
         tiketRepository.deleteById(id);
+    }
+
+    @Override
+    public List<RegistroHistoricoTiketDTO> consultarTiketFecha(Instant fechaInicio, Instant fechaFin) {
+        List<Tiket> listaTiketFechas = tiketRepository.consultarTiketPorfecha(fechaInicio, fechaFin);
+        RegistroHistoricoTiketDTO rhtd = null;
+        List<RegistroHistoricoTiketDTO> lrhtd = new ArrayList<>();
+
+        for (Tiket registroHistoricoTiketDTO : listaTiketFechas) {
+            rhtd = new RegistroHistoricoTiketDTO();
+            rhtd.setNombreCliente(nombreCliente(registroHistoricoTiketDTO.getClienteId()));
+            rhtd.setPuesto(registroHistoricoTiketDTO.getPuesto());
+            rhtd.setEstado(registroHistoricoTiketDTO.getEstado());
+            rhtd.setJornada(registroHistoricoTiketDTO.getJordana());
+            rhtd.setPrecioTotal(registroHistoricoTiketDTO.getPrecioTotal());
+            lrhtd.add(rhtd);
+        }
+        return lrhtd;
     }
 }

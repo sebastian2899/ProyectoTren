@@ -1,6 +1,7 @@
 package com.mycompany.myapp.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
@@ -39,8 +40,30 @@ public class Tiket implements Serializable {
     @Column(name = "jordana")
     private String jordana;
 
+    @Column(name = "precio_tiket")
+    private BigDecimal precioTiket;
+
+    @Column(name = "precio_total")
+    private BigDecimal PrecioTotal;
+
     @Transient
     private String nombreCliente;
+
+    public BigDecimal getPrecioTiket() {
+        return precioTiket;
+    }
+
+    public void setPrecioTiket(BigDecimal precioTiket) {
+        this.precioTiket = precioTiket;
+    }
+
+    public BigDecimal getPrecioTotal() {
+        return PrecioTotal;
+    }
+
+    public void setPrecioTotal(BigDecimal precioTotal) {
+        PrecioTotal = precioTotal;
+    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 

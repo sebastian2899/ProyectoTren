@@ -9,10 +9,15 @@ import { ICliente, getClienteIdentifier } from '../cliente.model';
 
 export type EntityResponseType = HttpResponse<ICliente>;
 export type EntityArrayResponseType = HttpResponse<ICliente[]>;
+export type NumberType = HttpResponse<number>;
 
 @Injectable({ providedIn: 'root' })
 export class ClienteService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/clientes');
+  protected resourceUrlFiltro = this.applicationConfigService.getEndpointFor('api/filtro');
+  protected resourceUrlCargarFoto = this.applicationConfigService.getEndpointFor('api/cargarFotoCliente');
+  protected resourceUrlActualizarFoto = this.applicationConfigService.getEndpointFor('api/actualizarFotoCliente');
+  protected resourceUrlConsultarFoto = this.applicationConfigService.getEndpointFor('api/consultarFotoCliente');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -35,6 +40,28 @@ export class ClienteService {
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<ICliente[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  filtro(nombreFiltro: string): Observable<EntityArrayResponseType> {
+    return this.http.get<ICliente[]>(`${this.resourceUrlFiltro}/${nombreFiltro}`, { observe: 'response' });
+  }
+
+  cargarFoto(archivo: any): Observable<NumberType> {
+    const formdata: FormData = new FormData();
+    formdata.append('file', archivo);
+
+    return this.http.post<number>(this.resourceUrlCargarFoto, formdata, { observe: 'response' });
+  }
+
+  actualizarFoto(archivo: any, idCliente: number): Observable<any> {
+    const formdata: FormData = new FormData();
+    formdata.append('file', archivo);
+
+    return this.http.post<any>(`${this.resourceUrlActualizarFoto}/${idCliente}`, formdata, { observe: 'response' });
+  }
+
+  consultarFoto(idCliente: number): Observable<any> {
+    return this.http.get<any>(`${this.resourceUrlFiltro}/${idCliente}`, { observe: 'response' });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {

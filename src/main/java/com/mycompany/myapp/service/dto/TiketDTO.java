@@ -1,6 +1,7 @@
 package com.mycompany.myapp.service.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -30,6 +31,12 @@ public class TiketDTO implements Serializable {
 
     private String nombreCliente;
 
+    private BigDecimal precioTiket;
+
+    private BigDecimal precioTotal;
+
+    public TiketDTO() {}
+
     public String getNombreCliente() {
         return nombreCliente;
     }
@@ -56,6 +63,22 @@ public class TiketDTO implements Serializable {
 
     public Long getTrenId() {
         return trenId;
+    }
+
+    public BigDecimal getPrecioTiket() {
+        return precioTiket;
+    }
+
+    public void setPrecioTiket(BigDecimal precioTiket) {
+        this.precioTiket = precioTiket;
+    }
+
+    public BigDecimal getPrecioTotal() {
+        return precioTotal;
+    }
+
+    public void setPrecioTotal(BigDecimal precioTotal) {
+        this.precioTotal = precioTotal;
     }
 
     public void setTrenId(Long trenId) {

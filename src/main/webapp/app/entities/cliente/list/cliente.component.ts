@@ -13,16 +13,39 @@ import { ClienteDeleteDialogComponent } from '../delete/cliente-delete-dialog.co
 export class ClienteComponent implements OnInit {
   clientes?: ICliente[];
   isLoading = false;
+  nombreFiltro: string | undefined;
 
   constructor(protected clienteService: ClienteService, protected modalService: NgbModal) {}
 
   loadAll(): void {
     this.isLoading = true;
 
-    this.clienteService.query().subscribe(
+    if (this.nombreFiltro && this.nombreFiltro.length > 2) {
+      this.clienteService.filtro(this.nombreFiltro).subscribe(
+        (res: HttpResponse<ICliente[]>) => {
+          this.isLoading = false;
+          this.clientes = res.body ?? [];
+        },
+        () => {
+          this.isLoading = false;
+        }
+      );
+    } else if (this.nombreFiltro!.length === 0) {
+      this.cargarFiltro();
+    } else {
+      this.isLoading = false;
+    }
+  }
+
+  cargarFiltro(): void {
+    if (!this.nombreFiltro) {
+      this.nombreFiltro = 'undefined';
+    }
+    this.clienteService.filtro(this.nombreFiltro).subscribe(
       (res: HttpResponse<ICliente[]>) => {
         this.isLoading = false;
         this.clientes = res.body ?? [];
+        this.nombreFiltro = '';
       },
       () => {
         this.isLoading = false;
@@ -31,7 +54,7 @@ export class ClienteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadAll();
+    this.cargarFiltro();
   }
 
   trackId(index: number, item: ICliente): number {

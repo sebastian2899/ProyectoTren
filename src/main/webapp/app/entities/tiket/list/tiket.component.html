@@ -31,6 +31,83 @@
     <span>Aun no hay tiquetes reservados.</span>
   </div>
 
+  <div class="row">
+    <div class="col-md-4 form-group">
+      <label class="form-control-label" for="field_fechaI">Fecha inicio</label>
+      <div class="d-flex">
+        <input
+          id="field_fechaI"
+          data-cy="fechaI"
+          type="datetime-local"
+          class="form-control"
+          name="fechaI"
+          [(ngModel)]="fechaI"
+          placeholder="YYYY-MM-DD HH:mm"
+        />
+      </div>
+    </div>
+
+    <div class="col-md-4 form-group">
+      <label class="form-control-label" for="field_fechaF">Fecha fin</label>
+      <div class="d-flex">
+        <input
+          id="field_fechaF"
+          data-cy="fechaF"
+          type="datetime-local"
+          class="form-control"
+          name="fechaF"
+          [(ngModel)]="fechaF"
+          placeholder="YYYY-MM-DD HH:mm"
+        />
+      </div>
+    </div>
+
+    <div>
+      <br />
+      <button [disabled]="isLoading" style="margin-top: 7px" id="jh-create-entity" class="btn btn-primary" (click)="cargarTiketFechas()">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span> Filtrar </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end mb-5">
+    <br />
+    <button style="margin-top: 7px" id="jh-create-entity" class="btn btn-outline-info" (click)="findAllTikets()">
+      <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+      <span>Ver tikets en espera o no disponibles</span>
+    </button>
+
+    <button style="margin-top: 7px" id="jh-create-entity" class="btn btn-outline-info" (click)="loadAll()">
+      <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+      <span>Tikets Activos.</span>
+    </button>
+  </div>
+
+  <div *ngIf="tiketFechas && tiketFechas.length > 0">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col"><span>Cliente </span></th>
+          <th scope="col"><span jhiTranslate="trainProyectApp.tiket.puesto">Puesto</span></th>
+          <th scope="col"><span jhiTranslate="trainProyectApp.tiket.estado">Estado</span></th>
+          <th scope="col"><span jhiTranslate="trainProyectApp.tiket.jordana">Jornada</span></th>
+          <th scope="col"><span>Precio Total</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tiketfecha of tiketFechas">
+          <td>{{ tiketfecha.nombreCliente }}</td>
+          <td>{{ tiketfecha.puesto }}</td>
+          <td>{{ tiketfecha.estado }}</td>
+          <td>{{ tiketfecha.jornada }}</td>
+          <td>{{ tiketfecha.precioTotal }}</td>
+          <td class="text-right"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
   <div class="table-responsive" id="entities" *ngIf="tikets && tikets.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>

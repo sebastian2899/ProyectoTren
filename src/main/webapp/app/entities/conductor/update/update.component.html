@@ -1,0 +1,82 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-cliente-heading" data-cy="ClienteCreateUpdateHeading" *ngIf="editForm.get(['id'])!.value === null">Crear Conductor</h2>
+      <h2 id="jhi-cliente-heading" data-cy="ClienteCreateUpdateHeading" *ngIf="editForm.get(['id'])!.value">Editar Conductor</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row">
+          <div class="col-md-5 form-group">
+            <label class="form-control-label" for="field_foto">Foto</label>
+            <br />
+            <input type="file" accept="image/jpeg" (change)="onFileSelected($event)" class="file-input" />
+          </div>
+        </div>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_nombres">Nombres</label>
+          <input type="text" class="form-control" name="nombres" id="field_nombres" data-cy="nombres" formControlName="nombres" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_apellidos">Apellidos</label>
+          <input type="text" class="form-control" name="apellidos" id="field_apellidos" data-cy="apellidos" formControlName="apellidos" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_telefono">Telefono</label>
+          <input type="text" class="form-control" name="telefono" id="field_telefono" data-cy="telefono" formControlName="telefono" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_sueldo">Sueldo</label>
+          <input
+            type="number"
+            max="999999"
+            class="form-control"
+            name="sueldo"
+            id="field_sueldo"
+            data-cy="sueldo"
+            formControlName="sueldo"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label" for="field_fechaNacimiento">Fecha Nacimiento</label>
+        <input
+          id="field_fechaNacimiento"
+          data-cy="fechaNacimiento"
+          type="datetime-local"
+          class="form-control"
+          name="fechaNacimiento"
+          formControlName="fechaNacimiento"
+          placeholder="YYYY-MM-DD"
+        />
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

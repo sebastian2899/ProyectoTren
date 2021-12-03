@@ -70,8 +70,59 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
+    public List<ClienteDTO> buscarConFiltros(String nombreFiltro) {
+        String filtroRecibido = "%" + nombreFiltro + "%";
+
+        List<Cliente> clientesFiltrados = clienteRepository.clientesPorFiltro(filtroRecibido);
+
+        return clienteMapper.toDto(clientesFiltrados);
+    }
+
+    public List<ClienteDTO> validarFiltro(String nombreFiltro) {
+        if (nombreFiltro == null || nombreFiltro.isEmpty() || nombreFiltro.equalsIgnoreCase("undefined")) {
+            return findAll();
+        } else {
+            return buscarConFiltros(nombreFiltro);
+        }
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete Cliente : {}", id);
         clienteRepository.deleteById(id);
+    }
+
+    @Override
+    public Long cargarFotoCliente(byte[] foto) {
+        Cliente cliente = new Cliente();
+        cliente.setFoto(foto);
+        clienteRepository.save(cliente);
+
+        return cliente.getId();
+    }
+
+    @Override
+    public byte[] actualizarFotoCliente(byte[] bytes, Long idCliente) {
+        Cliente cliente = clienteRepository.buscarCliente(idCliente);
+        cliente.setFoto(bytes);
+
+        return bytes;
+    }
+
+    @Override
+    public ClienteDTO actualizarCliente(ClienteDTO clienteDto) {
+        Cliente cliente = clienteMapper.toEntity(clienteDto);
+        Cliente clienteTemp = clienteRepository.buscarCliente(clienteDto.getId());
+
+        cliente.setFoto(clienteTemp.getFoto());
+        clienteRepository.save(cliente);
+
+        return clienteMapper.toDto(cliente);
+    }
+
+    @Override
+    public byte[] consultarFoto(Long idCliente) {
+        byte[] foto = clienteRepository.consultarFotoCliente(idCliente);
+        return foto;
     }
 }

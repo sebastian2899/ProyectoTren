@@ -9,6 +9,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { ITiket, getTiketIdentifier } from '../tiket.model';
 import { ITren } from 'app/entities/tren/tren.model';
+import { IRegistroHistoricoTiket } from '../consultFech';
 
 export type EntityResponseType = HttpResponse<ITiket>;
 export type EntityArrayResponseType = HttpResponse<ITiket[]>;
@@ -17,6 +18,8 @@ export type EntityArrayResponseType = HttpResponse<ITiket[]>;
 export class TiketService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/tikets');
   protected resourceUrlPuesto = this.applicationConfigService.getEndpointFor('api/puesto');
+  protected resourceUrlFechas = this.applicationConfigService.getEndpointFor('api/consultarTiketFechas');
+  protected resourceUrlTIkets = this.applicationConfigService.getEndpointFor('api/Alltikets');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -47,6 +50,12 @@ export class TiketService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  findByFechas(fechaInicio: string, fechaFin: string): Observable<EntityArrayResponseType> {
+    return this.http
+      .get<IRegistroHistoricoTiket[]>(`${this.resourceUrlFechas}/${fechaInicio}/${fechaFin}`, { observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
   puesto(id: number): Observable<EntityResponseType> {
     return this.http
       .get<ITren>(`${this.resourceUrlPuesto}/${id}`, { observe: 'response' })
@@ -57,6 +66,13 @@ export class TiketService {
     const options = createRequestOption(req);
     return this.http
       .get<ITiket[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  findTikets(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<ITiket[]>(this.resourceUrlTIkets, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 

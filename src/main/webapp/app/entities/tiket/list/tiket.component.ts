@@ -5,6 +5,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ITiket } from '../tiket.model';
 import { TiketService } from '../service/tiket.service';
 import { TiketDeleteDialogComponent } from '../delete/tiket-delete-dialog.component';
+import { IRegistroHistoricoTiket } from '../consultFech';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'jhi-tiket',
@@ -13,12 +15,23 @@ import { TiketDeleteDialogComponent } from '../delete/tiket-delete-dialog.compon
 export class TiketComponent implements OnInit {
   tikets?: ITiket[];
   isLoading = false;
+  tiketFechas?: IRegistroHistoricoTiket[] | null;
+  fechaI?: dayjs.Dayjs | null;
+  fechaF?: dayjs.Dayjs | null;
 
-  constructor(protected tiketService: TiketService, protected modalService: NgbModal) {}
+  constructor(protected tiketService: TiketService, protected modalService: NgbModal) {
+    this.fechaI = dayjs().startOf('day');
+    this.fechaF = dayjs().startOf('day');
+  }
+
+  ngOnInit(): void {
+    this.fechaI = dayjs().startOf('day');
+    this.fechaF = dayjs().startOf('day');
+    this.loadAll();
+  }
 
   loadAll(): void {
     this.isLoading = true;
-
     this.tiketService.query().subscribe(
       (res: HttpResponse<ITiket[]>) => {
         this.isLoading = false;
@@ -30,8 +43,27 @@ export class TiketComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
-    this.loadAll();
+  cargarTiketFechas(): void {
+    if (this.fechaI && this.fechaF) {
+      this.tiketService
+        .findByFechas(this.fechaI.toString(), this.fechaF.toString())
+        .subscribe((data: HttpResponse<IRegistroHistoricoTiket[]>) => {
+          this.tiketFechas = data.body ?? null;
+        });
+    }
+  }
+
+  findAllTikets(): void {
+    this.isLoading = true;
+    this.tiketService.findTikets().subscribe(
+      (data: HttpResponse<ITiket[]>) => {
+        this.isLoading = false;
+        this.tikets = data.body ?? [];
+      },
+      () => {
+        this.isLoading = false;
+      }
+    );
   }
 
   trackId(index: number, item: ITiket): number {

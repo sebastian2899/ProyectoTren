@@ -9,6 +9,12 @@
 
       <jhi-alert></jhi-alert>
 
+      <div style="align-content: center" class="row">
+        <div class="col-md-2 form-group">
+          <img style="width: 205px" mat-card-image src="data:image/jpg;base64,{{ cliente.foto }}" alt="Foto perfil" />
+        </div>
+      </div>
+
       <dl class="row-md jh-entity-details">
         <dt><span jhiTranslate="global.field.id">ID</span></dt>
         <dd>
@@ -17,6 +23,14 @@
         <dt><span jhiTranslate="trainProyectApp.cliente.nombre">Nombre</span></dt>
         <dd>
           <span>{{ cliente.nombre }}</span>
+        </dd>
+        <dt><span>Apellido</span></dt>
+        <dd>
+          <span>{{ cliente.apellido }}</span>
+        </dd>
+        <dt><span>Tipo De Cliente</span></dt>
+        <dd>
+          <span>{{ cliente.tipoCliente }}</span>
         </dd>
         <dt><span jhiTranslate="trainProyectApp.cliente.correo">Correo</span></dt>
         <dd>

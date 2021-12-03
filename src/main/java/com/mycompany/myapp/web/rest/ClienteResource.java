@@ -4,6 +4,7 @@ import com.mycompany.myapp.repository.ClienteRepository;
 import com.mycompany.myapp.service.ClienteService;
 import com.mycompany.myapp.service.dto.ClienteDTO;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -87,7 +89,7 @@ public class ClienteResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        ClienteDTO result = clienteService.save(clienteDTO);
+        ClienteDTO result = clienteService.actualizarCliente(clienteDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, clienteDTO.getId().toString()))
@@ -152,6 +154,55 @@ public class ClienteResource {
         log.debug("REST request to get Cliente : {}", id);
         Optional<ClienteDTO> clienteDTO = clienteService.findOne(id);
         return ResponseUtil.wrapOrNotFound(clienteDTO);
+    }
+
+    @PostMapping(path = "/cargarFotoCliente", consumes = "multipart/form-data", produces = "application/json")
+    public ResponseEntity<Long> cargarFoto(@RequestParam("file") MultipartFile multipartfile) throws URISyntaxException {
+        log.debug("REST request to uploadFoto Cliente : {}");
+
+        Long respuesta = null;
+
+        try {
+            respuesta = clienteService.cargarFotoCliente(multipartfile.getBytes());
+        } catch (IOException e) {
+            return ResponseEntity.created(new URI("/api/cargarFotoCliente/" + respuesta)).body(respuesta);
+        }
+
+        return ResponseEntity.created(new URI("/api/cargarFotoCliente/" + respuesta)).body(respuesta);
+    }
+
+    @PostMapping("/actualizarFotoCliente/{idCliente}")
+    public ResponseEntity<byte[]> actualizarFotoClient(@PathVariable Long idCliente, @RequestParam("file") MultipartFile multipartFile)
+        throws URISyntaxException {
+        log.debug("REST request to updateFile{}" + idCliente);
+
+        byte[] respuesta = null;
+
+        try {
+            respuesta = clienteService.actualizarFotoCliente(multipartFile.getBytes(), idCliente);
+        } catch (IOException e) {
+            return ResponseEntity.created(new URI("/api/actualizarFotoCliente/" + respuesta)).body(respuesta);
+        }
+
+        return ResponseEntity.ok().body(respuesta);
+    }
+
+    @GetMapping("/filtro/{nombreFiltro}")
+    public ResponseEntity<List<ClienteDTO>> clientesFiltrados(@PathVariable String nombreFiltro) {
+        log.debug("REST request to get Clientes : {}", nombreFiltro);
+
+        List<ClienteDTO> clientes = clienteService.validarFiltro(nombreFiltro);
+
+        return ResponseEntity.ok().body(clientes);
+    }
+
+    @GetMapping("/consultarFotoCliente/{idCliente}")
+    public ResponseEntity<byte[]> consultarFotoCliente(@PathVariable Long idCliente) {
+        log.debug("REST request to get file : {}", idCliente);
+
+        byte[] bytes = clienteService.consultarFoto(idCliente);
+
+        return ResponseEntity.ok().body(bytes);
     }
 
     /**

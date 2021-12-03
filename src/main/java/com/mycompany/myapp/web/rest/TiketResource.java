@@ -2,11 +2,14 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.repository.TiketRepository;
 import com.mycompany.myapp.service.TiketService;
+import com.mycompany.myapp.service.dto.RegistroHistoricoTiketDTO;
 import com.mycompany.myapp.service.dto.TiketDTO;
 import com.mycompany.myapp.service.dto.TrenDTO;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -14,7 +17,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -137,9 +148,15 @@ public class TiketResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tikets in body.
      */
     @GetMapping("/tikets")
-    public List<TiketDTO> getAllTikets() {
+    public List<TiketDTO> getTikets() {
         log.debug("REST request to get all Tikets");
         return tiketService.findAll();
+    }
+
+    @GetMapping("/Alltikets")
+    public List<TiketDTO> getAllTikets() {
+        log.debug("REST request to get all Tikets");
+        return tiketService.listaAllTikets();
     }
 
     /* @GetMapping("/puesto/{id}")
@@ -166,8 +183,25 @@ public class TiketResource {
     @GetMapping("/tikets/{id}")
     public ResponseEntity<TiketDTO> getTiket(@PathVariable Long id) {
         log.debug("REST request to get Tiket : {}", id);
-        Optional<TiketDTO> tiketDTO = tiketService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(tiketDTO);
+        TiketDTO tiketDTO = tiketService.findOne(id);
+        return ResponseEntity.ok().body(tiketDTO);
+    }
+
+    @GetMapping("/consultarTiketFechas/{fechaInicio}/{fechaFin}")
+    public ResponseEntity<List<RegistroHistoricoTiketDTO>> tiketsPorfecha(@PathVariable String fechaInicio, @PathVariable String fechaFin) {
+        log.debug("REST request to get all Tikets");
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        List<RegistroHistoricoTiketDTO> rhfp = null;
+        try {
+            Instant fechaI = format.parse(fechaInicio.substring(0, fechaInicio.indexOf("T"))).toInstant();
+            Instant fechaF = format.parse(fechaFin.substring(0, fechaFin.indexOf("T"))).toInstant();
+            rhfp = tiketService.consultarTiketFecha(fechaI, fechaF);
+        } catch (Exception e) {
+            rhfp = null;
+        }
+
+        return ResponseEntity.ok().body(rhfp);
     }
 
     /**

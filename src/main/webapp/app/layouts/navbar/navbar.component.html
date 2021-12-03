@@ -69,6 +69,18 @@
           <li>
             <a
               class="dropdown-item"
+              routerLink="conductor"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Conductor</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
               routerLink="tiket"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"

@@ -23,8 +23,17 @@ public class Cliente implements Serializable {
     @Column(name = "nombre")
     private String nombre;
 
+    @Column(name = "apellido")
+    private String apellido;
+
+    @Column(name = "tipo_cliente")
+    private String tipoCliente;
+
     @Column(name = "correo")
     private String correo;
+
+    @Column(name = "foto")
+    private byte[] foto;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -35,6 +44,30 @@ public class Cliente implements Serializable {
     public Cliente id(Long id) {
         this.setId(id);
         return this;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getTipoCliente() {
+        return tipoCliente;
+    }
+
+    public void setTipoCliente(String tipoCliente) {
+        this.tipoCliente = tipoCliente;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 
     public void setId(Long id) {

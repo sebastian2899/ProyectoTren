@@ -2,6 +2,40 @@
   <h2 id="page-heading" data-cy="ClienteHeading">
     <span jhiTranslate="trainProyectApp.cliente.home.title">Clientes</span>
 
+    <form name="editForm" role="form" novalidate (ngSubmit)="loadAll()">
+      <div class="row" style="margin-top: 34px">
+        <div class="col-md-4 form-group">
+          <label class="form-control-label" for="field_nombreFiltro">Buscar Cliente</label>
+          <div class="d-flex">
+            <input
+              id="field_nombreFiltro"
+              data-cy="nombreFiltro"
+              type="text"
+              class="form-control"
+              name="nombreFiltro"
+              [(ngModel)]="nombreFiltro"
+              placeholder="Buscar por nombre"
+              (keyup)="loadAll()"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <br />
+          <button
+            [disabled]="isLoading"
+            style="margin-top: 7px"
+            id="jh-create-entity"
+            class="btn btn-primary jh-create-entity create-proyecto alinear-filtrar"
+            (click)="cargarFiltro()"
+          >
+            <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+            <span> Consultar </span>
+          </button>
+        </div>
+      </div>
+    </form>
+
     <div class="d-flex justify-content-end">
       <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
@@ -34,6 +68,8 @@
         <tr>
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
           <th scope="col"><span jhiTranslate="trainProyectApp.cliente.nombre">Nombre</span></th>
+          <th scope="col"><span>Apellido</span></th>
+          <th scope="col"><span>Tipo Cliente</span></th>
           <th scope="col"><span jhiTranslate="trainProyectApp.cliente.correo">Correo</span></th>
           <th scope="col"></th>
         </tr>
@@ -44,6 +80,8 @@
             <a [routerLink]="['/cliente', cliente.id, 'view']">{{ cliente.id }}</a>
           </td>
           <td>{{ cliente.nombre }}</td>
+          <td>{{ cliente.apellido }}</td>
+          <td>{{ cliente.tipoCliente }}</td>
           <td>{{ cliente.correo }}</td>
           <td class="text-right">
             <div class="btn-group">

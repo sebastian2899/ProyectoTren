@@ -38,6 +38,8 @@ export class TiketUpdateComponent implements OnInit {
     puesto: [],
     estado: [],
     jordana: [],
+    precioTiket: [],
+    precioTotal: [],
   });
 
   constructor(
@@ -76,6 +78,29 @@ export class TiketUpdateComponent implements OnInit {
         this.clientes = [];
       }
     );
+  }
+
+  calcularPrecioTotal(): void {
+    const jornada = this.editForm.get(['jordana'])!.value;
+    const precioNoche = 1500;
+    const precioTiket = 4000;
+    const estadoTiquete = this.editForm.get(['estado'])!.value;
+    let precioTotal = 0;
+
+    this.editForm.get(['precioTiket'])?.setValue(precioTiket);
+
+    if (
+      (jornada === 'MAÑANA' || jornada === 'TARDE' || jornada === 'NOCHE') &&
+      (estadoTiquete === 'NO DISPONIBLE' || estadoTiquete === 'EN ESPERA')
+    ) {
+      this.editForm.get(['precioTotal'])?.setValue(0);
+      this.editForm.get(['precioTiket'])?.setValue(0);
+    } else if (jornada === 'NOCHE' && estadoTiquete === 'Activo') {
+      precioTotal = precioTiket - precioNoche;
+      this.editForm.get(['precioTotal'])?.setValue(precioTotal);
+    } else {
+      this.editForm.get(['precioTotal'])?.setValue(precioTiket);
+    }
   }
 
   cargarPuesto(): void {
@@ -141,6 +166,8 @@ export class TiketUpdateComponent implements OnInit {
       puesto: tiket.puesto,
       estado: tiket.estado,
       jordana: tiket.jordana,
+      precioTiket: tiket.precioTiket,
+      precioTotal: tiket.precioTotal,
     });
   }
 
@@ -154,6 +181,8 @@ export class TiketUpdateComponent implements OnInit {
       puesto: this.editForm.get(['puesto'])!.value,
       estado: this.editForm.get(['estado'])!.value,
       jordana: this.editForm.get(['jordana'])!.value,
+      precioTiket: this.editForm.get(['precioTiket'])!.value,
+      precioTotal: this.editForm.get(['precioTotal'])!.value,
     };
   }
 }
