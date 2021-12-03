@@ -105,12 +105,10 @@ export class TiketUpdateComponent implements OnInit {
 
   cargarPuesto(): void {
     const trenSeleccionado = this.editForm.get(['trenId'])!.value;
-
     this.tiketService.puesto(trenSeleccionado).subscribe((res: HttpResponse<ITren>) => {
       this.tren = res.body ?? null;
+      this.editForm.get(['asiento'])!.setValue(this.tren?.asientos);
     });
-
-    this.editForm.get(['asiento'])!.setValue(this.tren?.asientos);
   }
 
   cargarTren(): void {
