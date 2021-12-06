@@ -1,11 +1,11 @@
 {
   "home": {
-    "title": "¡Bienvenido, esta es una aplicacion para simular compras de tiquete para tren.!",
-    "subtitle": "Esta es la página de inicio",
+    "title": "Compra de tiket para TREN",
+    "subtitle": "Pagina de inicio",
     "logged": {
       "message": "Está conectado como \"{{username}}\". Para realizar el proceso de ingreso de datos, se debe iniciar sesion como admin."
     },
-    "question": "Para realizar la compra del tiquete ingrese como user.!:",
+    "question": "Para realizar la compra del tiquete ingrese primero los datos correspondientes.",
     "link": {
       "homepage": "Página de inicio de JHipster",
       "stackoverflow": "JHipster en Stack Overflow",

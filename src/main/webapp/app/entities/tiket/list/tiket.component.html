@@ -118,6 +118,7 @@
           <th scope="col"><span jhiTranslate="trainProyectApp.tiket.puesto">Puesto</span></th>
           <th scope="col"><span jhiTranslate="trainProyectApp.tiket.estado">Estado</span></th>
           <th scope="col"><span jhiTranslate="trainProyectApp.tiket.jordana">Jordana</span></th>
+          <th scope="col">Precio</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -132,6 +133,7 @@
           <td>{{ tiket.puesto }}</td>
           <td>{{ tiket.estado }}</td>
           <td>{{ tiket.jordana }}</td>
+          <td>{{ tiket.precioTotal }}</td>
           <td class="text-right">
             <div class="btn-group">
               <button type="submit" [routerLink]="['/tiket', tiket.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
